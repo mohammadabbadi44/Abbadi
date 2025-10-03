@@ -1,0 +1,49 @@
+{
+  "symbol": "XAUUSD",
+  "timeframe": "M5",
+  "days": 180,
+  "spread_points": 25,
+  "slippage_points": 35,
+  "commission_per_lot_usd": 7,
+  "use_ema200_trend_filter": true,
+  "min_signals": 4,
+  "sl_atr_mult": 3.06,
+  "tp_atr_mult": 3.08,
+  "cooldown_bars": 1,
+  "one_position": true,
+  "use_trailing": false,
+  "trail_atr_mult": 0.94,
+  "breakeven_at_rr": 0.86,
+  "trading_hours": {
+    "enabled": true,
+    "start": "08:00",
+    "end": "20:00"
+  },
+  "guards": {
+    "min_atr_pct": 0.000822,
+    "max_atr_pct": 0.04,
+    "max_spread_vs_atr": 0.36,
+    "max_trades_per_day": 220
+  },
+  "risk": {
+    "risk_per_trade_pct": 0.39,
+    "max_daily_loss_pct": 3.0,
+    "max_total_drawdown_pct": 45.0
+  },
+  "ai": {
+    "enabled": false,
+    "model_path": "models/hybrid_clf.joblib",
+    "decision_threshold": 0.68
+  },
+  "_best_stats": {
+    "symbol": "XAUUSD",
+    "timeframe": "M5",
+    "days": 180,
+    "trades": 2163,
+    "win_rate": 37.03,
+    "profit_factor": 0.45,
+    "max_dd": 36.39,
+    "return_pct": -36.39,
+    "file": "D:\\trading-bot new\\reports\\hybrid_ai_bt_20250812_161759.csv"
+  }
+}

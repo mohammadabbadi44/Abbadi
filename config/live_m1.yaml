@@ -1,0 +1,108 @@
+# ========================
+# live.yaml — XAUUSD (M15) — Intra-Bar Entries + Early BE/Trailing + Early Reversal
+# التشغيل:
+#   python -m scripts.live_trade_mt5 --live-config config/live.yaml --debug
+# ========================
+
+mode: balanced
+debug: true
+
+account:
+  login_via_mt5_terminal: true
+
+broker:
+  name: "mt5"
+  params: {}
+
+trade:
+  # ===== الرمز والزمن =====
+  symbol: "XAUUSD"            # غيّرها حرفيًا لو وسيطك يستخدم لاحقة (مثال: XAUUSD.m)
+  timeframe: "M15"
+  magic: 86575
+  paused: false
+
+  # ===== الدخول داخل الشمعة (intra-bar) =====
+  enter_anytime: true          # يسمح بفتح صفقة بأي وقت داخل شمعة الفريم
+  entry_cooldown_sec: 20       # يمنع فتح صفقات متتالية بسرعة مبالغ فيها
+
+  # ===== قيود عدد الصفقات والمخاطرة (قابلة للتعديل من YAML) =====
+  max_open_positions: 20        # أقصى عدد صفقات مفتوحة بنفس الوقت
+  risk_per_trade_pct: 0.30     # % مخاطرة لكل صفقة (للحجم الديناميكي)
+  total_risk_cap_pct: 2.0      # سقف المخاطرة الكلي على جميع الصفقات المفتوحة
+
+  # ===== مخاطرة وتنفيذ أخرى =====
+  max_daily_loss_pct: 1.0
+  max_volume_cap: 0.10
+  slippage_points: 120
+  spread_points: 0
+  max_retries: 3
+  retry_sleep: 0.35
+  freeze_secs: 1.5
+
+  # ===== SL/TP Recipes =====
+  min_sl_points: 180
+  use_smc_stops: false
+  atr_percentile_window: 300
+
+  # ===== Breakeven (أبكر + أوفست) =====
+  use_breakeven: true
+  breakeven_trigger_points: 30
+  breakeven_offset_points: 10   # بعد التعادل يحرك SL +10 نقاط لحماية الربح
+
+  # ===== Trailing (أقرب) =====
+  use_trailing: true
+  trailing_distance_points: 30
+
+  # ===== Reversal Filter (أسرع) =====
+  reversal_filter:
+    enabled: true
+    lookback_bars: 1
+    min_body_ratio: 0.55
+
+# ========= TickEngine / DOM =========
+tickengine:
+  lookback_sec: 900
+  poll_ms: 250
+  dom:
+    enabled: true
+    depth_levels: 8
+    latency_ms_budget: 200
+    drop_late: true
+    save_jsonl: true
+
+# ========= Ensemble / Decision =========
+decision:
+  mode: any
+  min_signals: 20
+  score_threshold_open: 0.62
+  score_threshold_close: 0.36
+  quorum_k: 15
+  ai_weight: 0.90
+  require_ai_agreement: false
+  tie_breaker: neutral
+  update_every_minutes: 1
+  use_live_bar: true           # ينسجم مع enter_anytime
+
+# ========= فلاتر عامة =========
+filters:
+  trading_hours:
+    enabled: false
+    start: "09:00"
+    end: "18:00"
+
+  trend_guard:
+    enabled: true
+
+  spread_guard:
+    enabled: true
+    max_spread_points: 250
+
+  global_extremes:
+    enabled: true
+    lookback_bars: 500
+    avoid_near_high_low_pct: 0.15
+
+# ========= لوج وتقارير =========
+logs:
+  dir: "reports/live_logs"
+  level: "INFO"

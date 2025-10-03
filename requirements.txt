@@ -1,0 +1,13 @@
+pandas
+numpy
+MetaTrader5
+python-dotenv
+rich
+matplotlib
+scikit-learn
+numba
+scikit-learn
+fastapi
+uvicorn
+joblib
+pandas

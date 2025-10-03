@@ -1,0 +1,70 @@
+data:
+  symbol: "XAUUSD"
+  timeframe: "30m"
+
+strategy:
+  profile: "fast_stable"
+  min_signals: 5
+  use_ema200_trend_filter: true     # فعّلنا فلتر الاتجاه
+  rr_ratio: 1.7                     # أهدأ للـ 30m
+  sl_atr_mult: 2.6
+  tp_atr_mult: 3.0
+  use_trailing: true
+  trail_atr_mult: 1.1               # ترلينغ أوسع شوي
+  trading_hours:
+    enabled: true
+    start: "08:00"
+    end:   "18:00"
+  signal_strength_thresholds:
+    weak: 0.0
+    medium: 0.015
+    strong: 0.03
+    very_strong: 0.05
+  allowed_strategies: []
+  ensemble:
+    weights: {}
+
+imports:
+  dirs:
+    - "strategy"
+    - "strategies"
+    - "indicators"
+    - "indicator"
+    - "signals"
+    - "modules"
+    - "utils"
+
+guards:
+  daily_take_profit_pct: 2.6        # واقعي أكثر على 30m
+  daily_stop_pct: 1.8
+  max_dd_stop_pct: 22.0
+
+backtest:
+  commission_perc: 0.0002
+  slippage_perc: 0.0001
+  atr_period: 14
+  atr_smoothing: "rma"
+  max_bars_hold: 10                 # اسمح للصفقة تتنفس
+
+risk:
+  base_risk_pct: 0.012
+  dynamic_by_strength: true
+  ladder:
+    weak: 0.006
+    medium: 0.010
+    strong: 0.015
+    very_strong: 0.020
+
+execution:
+  order_type: "MARKET"
+  slippage_pts: 50
+  partial_takeprofit:
+    enabled: true                   # فعلنا TP جزئي
+    tps:
+      - { rr: 1.0, close_pct: 0.35 }
+      - { rr: 1.5, close_pct: 0.25 }
+  move_sl_to_be_at_rr: 1.0          # نقل SL لبريك-إيفن عند 1R
+
+logging:
+  live_signal_path: "logs/live_signal_30m.json"
+  trades_log: "logs/trades_30m_autopilot.csv"

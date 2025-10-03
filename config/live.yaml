@@ -1,0 +1,40 @@
+# ========================
+# live_m15_xauusd.yaml — XAUUSD (M15) — إعدادات كاملة للـ live_trade_mt5.py
+# تشغيل:
+#   python -m scripts.live_trade_mt5 --live-config config/live_m15_xauusd.yaml --debug
+# ========================
+
+mode: balanced
+
+broker:
+  name: "mt5"
+  params: {}
+
+trade:
+  symbol: "XAUUSD"
+  timeframe: "M15"
+  magic: 20250930
+  risk_per_trade_pct: 0.30     # 0.5% مخاطرة لكل صفقة
+  max_volume_cap: 0.1         # سقف لوت
+  slippage_points: 120
+  spread_points: 0
+  max_retries: 3
+  retry_sleep: 0.5
+  freeze_secs: 1.5
+  paused: false
+  max_daily_loss_pct: 3.0      # يوقف إذا خسر 3% باليوم
+
+logs:
+  dir: "reports/live_logs"
+
+filters:
+  trading_hours:
+    enabled: false
+    start: "09:00"
+    end: "18:00"
+
+prop_rules:
+  equity_guard:
+    enabled: true
+    daily_loss_limit_pct: 3.0
+    max_drawdown_pct: 6.0

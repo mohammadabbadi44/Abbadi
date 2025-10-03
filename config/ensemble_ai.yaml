@@ -1,0 +1,51 @@
+# ==== Ensemble AI (M1 Turbo 24/7) ====
+symbol: "XAUUSD"
+timeframe: "M1"
+days: 90
+
+ensemble_mode: "weighted_mean"
+min_ensemble_votes: 1
+min_ensemble_conf: 0.50
+use_ema200_trend_filter: false
+cooldown_bars: 1
+one_position: false
+
+trading_hours:
+  enabled: false   # 24/7
+
+guards:
+  min_atr_pct: 0.0005
+  max_atr_pct: 0.050
+  max_spread_vs_atr: 0.34
+  max_trades_per_day: 320
+
+# إدارة الصفقة (خروج أسرع لتدوير أعلى)
+sl_atr_mult: 2.2
+tp_atr_mult: 3.0
+use_trailing: true
+trail_atr_mult: 0.80
+max_hold_bars: 5
+breakeven_at_rr: 1.0
+
+# فعّل الكل؛ M1 يستفيد من mean_reversion
+strategies:
+  trend_following:   { enabled: true, weight: 1.2 }
+  momentum_macd:     { enabled: true, weight: 1.1 }
+  breakout_donchian: { enabled: true, weight: 0.9 }
+  volatility_ttm:    { enabled: true, weight: 0.7 }
+  volume_obv:        { enabled: true, weight: 0.6 }
+  mean_reversion:    { enabled: true, weight: 0.9 }
+
+ai:
+  enabled: true
+  model_path: "models/ensemble_lr.joblib"
+  decision_threshold: 0.62
+
+risk:
+  risk_per_trade_pct: 0.05
+  max_daily_loss_pct: 1.0
+  max_total_drawdown_pct: 30.0
+
+spread_points: 32
+slippage_points: 60
+commission_per_lot_usd: 7

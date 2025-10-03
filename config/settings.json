@@ -1,0 +1,25 @@
+{
+  "strategy": {
+    "min_signals": 5,
+    "use_ema200_trend_filter": false,
+    "rr_ratio": 2.0919,
+    "sl_atr_mult": 2.7106,
+    "tp_atr_mult": 2.5841,
+    "use_trailing": false,
+    "trail_atr_mult": 1.2543,
+    "trading_hours": {
+      "enabled": true,
+      "start": "09:00",
+      "end": "18:00"
+    },
+    "signal_strength_thresholds": {
+      "weak": 0.01,
+      "medium": 0.02,
+      "strong": 0.03,
+      "very_strong": 0.04
+    },
+    "ensemble": {
+      "weights": {}
+    }
+  }
+}
